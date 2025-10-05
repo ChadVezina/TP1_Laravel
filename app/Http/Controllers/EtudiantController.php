@@ -41,16 +41,16 @@ class EtudiantController extends Controller
         ]);
 
         $student = Etudiant::create($validatedData);
-        return redirect()->route('etudiants.index')->with('success', 'Étudiant créé avec succès.'); 
+        return redirect()->route('etudiants.index')->with('success', 'Étudiant créé avec succès.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Etudiant $student)
+    public function show(Etudiant $etudiant)
     {
-        $student->load('city');
-        return view('etudiants.show', compact('student'));
+        $etudiant->load('city');
+        return view('etudiants.show', ['student' => $etudiant]);
     }
 
     /**

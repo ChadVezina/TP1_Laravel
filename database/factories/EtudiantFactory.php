@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Etudiant;
+use App\Models\Ville;
 
 class EtudiantFactory extends Factory
 {
@@ -16,8 +17,7 @@ class EtudiantFactory extends Factory
             'phone' => $this->faker->phoneNumber(),
             'email' => $this->faker->unique()->safeEmail(),
             'birthdate' => $this->faker->date(),
-            'city_id' => \App\Models\Ville::inRandomOrder()->first()->id,
+            'city_id' => Ville::inRandomOrder()->first()->id,
         ];
-
     }
 }

@@ -10,7 +10,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <a class="navbar-brand" href="#">Collège de Maisonneuve</a>
+        <a class="navbar-brand px-5" href="#">Collège de Maisonneuve</a>
         <ul class="navbar-nav ml-auto"></ul>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">

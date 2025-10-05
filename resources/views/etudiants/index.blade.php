@@ -21,14 +21,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($etudiants as $etudiant)
+        @foreach ($students as $student)
             <tr>
-                <td>{{ $etudiant->name }}</td>
-                <td>{{ $etudiant->email }}</td>
-                <td>{{ $etudiant->ville->name ?? '-' }}</td>
+                <td>{{ $student->name }}</td>
+                <td>{{ $student->email }}</td>
+                <td>{{ $student->city->name ?? '-' }}</td>
                 <td>
-                    <a class="btn btn-info btn-sm" href="{{ route('etudiants.show', $etudiant->id) }}">Voir</a>
-                    <a class="btn btn-secondary btn-sm" href="{{ route('etudiants.edit', $etudiant->id) }}">Éditer</a>
+                    <a class="btn btn-info btn-sm" href="{{ route('etudiants.show', $student->id) }}">Voir</a>
+                    <a class="btn btn-secondary btn-sm" href="{{ route('etudiants.edit', $student->id) }}">Éditer</a>
                 </td>
             </tr>
         @endforeach
