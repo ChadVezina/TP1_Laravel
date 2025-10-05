@@ -14,6 +14,7 @@
         <p class="card-text">Date de naissance: {{ $student->birthdate }}</p>
         <p class="card-text">Ville: {{ $student->city->name ?? 'Non spécifiée' }}</p>
         <a href="{{ route('etudiants.index') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ route('etudiants.edit', $student) }}" class="btn btn-primary">Modifier</a>
     </div>
 </div>
 @endsection

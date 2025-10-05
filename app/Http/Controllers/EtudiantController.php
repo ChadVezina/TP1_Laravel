@@ -56,17 +56,28 @@ class EtudiantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Etudiant $etudiant)
     {
-        //
+        $cities = Ville::orderBy('name')->get();
+        return view('etudiants.edit', compact('etudiant', 'cities'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Etudiant $etudiant)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'phone' => 'required|string|max:50',
+            'email' => 'required|email|unique:etudiants,email,' . $etudiant->id,
+            'birthdate' => 'required|date',
+            'city_id' => 'required|exists:villes,id',
+        ]);
+
+        $etudiant->update($validatedData);
+        return redirect()->route('etudiants.index')->with('success', 'Étudiant mis à jour avec succès.');
     }
 
     /**
