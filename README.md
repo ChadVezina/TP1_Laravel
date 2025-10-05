@@ -1,61 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Maisonneuve_e2496523 — Gestion des étudiants (Laravel + Blade, REST)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application Laravel pour collecter, afficher, créer, mettre à jour et supprimer des **étudiants** du Collège Maisonneuve, liée à une table **villes**. UI en Blade (Bootstrap), contrôleur RESTful, données initiales via seeders/factories. Pensée pour évoluer vers un réseau social étudiant.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Stack & prérequis
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP ≥ 8.2, Composer ≥ 2.x  
+- Laravel 11.x  
+- MySQL
+- Node.js ≥ 18  
+- Navigateur moderne
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 📁 Structure (extrait)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+app/
+  Http/Controllers/EtudiantController.php
+  Models/Etudiant.php
+  Models/Ville.php
+database/
+  factories/EtudiantFactory.php
+  migrations/*_create_villes_table.php
+  migrations/*_create_etudiants_table.php
+  seeders/DatabaseSeeder.php
+  seeders/EtudiantSeeder.php
+  seeders/VilleSeeder.php
+public/
+  css/style.css (optionnel)
+resources/
+  views/layout.blade.php
+  views/etudiants/index.blade.php
+  views/etudiants/create.blade.php
+  views/etudiants/edit.blade.php
+  views/etudiants/show.blade.php
+routes/
+  web.php
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Installation & configuration
 
-## Laravel Sponsors
+```bash
+# 1) Cloner
+git clone <votre-repo.git>
+cd Maisonneuvee2496523
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# 2) Dépendances
+composer install
 
-### Premium Partners
+# 3) Variables d'env
+cp .env.example .env
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**.env (exemple MySQL)**
+```
+APP_NAME=name
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
 
-## Contributing
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=database
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🗃️ Base de données
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+# Migrations
+php artisan migrate
 
-## Security Vulnerabilities
+# Seed (15 villes + 100 étudiants)
+php artisan db:seed
+# ou
+php artisan db:seed --class=VilleSeeder
+php artisan db:seed --class=EtudiantSeeder
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> Tables créées : **villes** (id, nom), **etudiants** (id, nom, adresse, telephone, email unique, date_naissance, ville_id FK).
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🧱 Artisan (rappel des commandes clés)
+
+```bash
+# Projet (déjà fait côté auteur)
+laravel new Maisonneuve_e2496523
+
+# Modèles + migrations
+php artisan make:model Ville -m
+php artisan make:model Etudiant -m
+
+# Factory + seeders
+php artisan make:factory EtudiantFactory --model=Etudiant
+php artisan make:seeder VilleSeeder
+php artisan make:seeder EtudiantSeeder
+
+# Contrôleur REST
+php artisan make:controller EtudiantController --resource
+```
+
+---
+
+## 🧭 Routes & endpoints
+
+`routes/web.php`
+```php
+use App\Http\Controllers\EtudiantController;
+Route::resource('etudiants', EtudiantController::class);
+```
+
+| Verbe | URI                          | Action   | Contrôleur                     |
+|------:|------------------------------|----------|--------------------------------|
+| GET   | /etudiants                   | index    | EtudiantController@index       |
+| GET   | /etudiants/create            | create   | EtudiantController@create      |
+| POST  | /etudiants                   | store    | EtudiantController@store       |
+| GET   | /etudiants/{etudiant}        | show     | EtudiantController@show        |
+| GET   | /etudiants/{etudiant}/edit   | edit     | EtudiantController@edit        |
+| PUT   | /etudiants/{etudiant}        | update   | EtudiantController@update      |
+| DELETE| /etudiants/{etudiant}        | destroy  | EtudiantController@destroy     |
+
+---
+
+## 🖥️ Lancer l’app
+
+```bash
+php artisan serve
+# http://127.0.0.1:8000/etudiants
+```
+
+---
+
+## 🧩 Vues principales (Blade)
+
+- `resources/views/layout.blade.php` — layout global (Bootstrap + nav)
+- `resources/views/etudiants/index.blade.php` — liste + actions Voir/Modifier/Supprimer
+- `resources/views/etudiants/create.blade.php` — formulaire de création (select des villes)
+- `resources/views/etudiants/edit.blade.php` — formulaire d’édition
+- `resources/views/etudiants/show.blade.php` — détails d’un étudiant
+
+> Les formulaires utilisent `@csrf`, validations côté serveur et retours d’erreurs (`$errors`).
+
+---
+
+## ✅ Validation (store/update)
+
+- `nom` : required|string|max:255  
+- `adresse` : required|string|max:255  
+- `telephone` : required|string|max:50  
+- `email` : required|email|unique:etudiants,email *(update : unique sauf l’ID courant)*  
+- `date_naissance` : required|date  
+- `ville_id` : required|exists:villes,id
+
+---
+
+## 🔗 Relations Eloquent
+
+- `Etudiant` **belongsTo** `Ville` (`ville_id`)  
+- `Ville` **hasMany** `Etudiant`
+
+---
+
+## 🔒 Sécurité & bonnes pratiques
+
+- CSRF par défaut (forms Blade)  
+- Validation systématique des payloads  
+- Colonnes `fillable` définies sur les modèles (mass assignment safe)  
+- Email unique sur `etudiants.email`
+
+---
+
