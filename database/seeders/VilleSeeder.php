@@ -12,13 +12,21 @@ class VilleSeeder extends Seeder
      */
     public function run(): void
     {
-        $cities = ['Montreal', 'Quebec', 'Laval', 
-        'Gatineau', 'Longueuil', 'Sherbrooke', 
-        'Saguenay', 'Trois-Rivieres', 'Terrebonne', 
-        'Saint-Jean-sur-Richelieu'];
+        $cities = [
+            'Montreal',
+            'Quebec',
+            'Laval',
+            'Gatineau',
+            'Longueuil',
+            'Sherbrooke',
+            'Saguenay',
+            'Trois-Rivieres',
+            'Terrebonne',
+            'Saint-Jean-sur-Richelieu'
+        ];
 
         foreach ($cities as $city) {
-            Ville::create(['name' => $city]);
+            Ville::firstOrCreate(['name' => $city]);
         }
     }
 }
