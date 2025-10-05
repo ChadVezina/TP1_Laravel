@@ -12,7 +12,8 @@ class EtudiantController extends Controller
      */
     public function index()
     {
-        //
+        $etudiants = Etudiant::with('city')->orderBy('name')->get();
+        return view('etudiants.index', compact('etudiants'));
     }
 
     /**
