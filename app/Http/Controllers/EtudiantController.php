@@ -47,9 +47,10 @@ class EtudiantController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Etudiant $student)
     {
-        //
+        $student->load('city');
+        return view('etudiants.show', compact('student'));
     }
 
     /**
