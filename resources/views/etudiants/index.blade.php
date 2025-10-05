@@ -29,6 +29,11 @@
                 <td>
                     <a class="btn btn-info btn-sm" href="{{ route('etudiants.show', $student->id) }}">Voir</a>
                     <a class="btn btn-secondary btn-sm" href="{{ route('etudiants.edit', $student->id) }}">Éditer</a>
+                    <form class="d-inline" action="{{ route('etudiants.destroy', $student->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
